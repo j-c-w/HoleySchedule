@@ -1,0 +1,11 @@
+alpha = { 'a'..'z' | 'A'..'Z' | "." | "_" }
+name_alpha = { 'a'..'z' | 'A'..'Z' | "." | "_" }
+
+hole_type = { name_alpha* }
+hole = { "<<" ~ hole_type ~ ">>" }
+synthesis_escapes = {
+  alpha* ~ hole ~ synthesis_escapes 
+  | alpha*
+}
+
+file = { synthesis_escapes* ~ EOI }

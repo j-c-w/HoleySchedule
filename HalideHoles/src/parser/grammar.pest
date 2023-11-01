@@ -1,11 +1,14 @@
-alpha = { 'a'..'z' | 'A'..'Z' | "." | "_" }
+alpha = { 'a'..'z' | 'A'..'Z' | "." | "_" | " " | "\n" }
 name_alpha = { 'a'..'z' | 'A'..'Z' | "." | "_" }
+
+alpha_plus = { alpha + }
+alpha_star = { alpha * }
 
 hole_type = { name_alpha* }
 hole = { "<<" ~ hole_type ~ ">>" }
 synthesis_escapes = {
-  alpha* ~ hole ~ synthesis_escapes 
-  | alpha*
+  alpha_star ~ hole ~ synthesis_escapes 
+  | alpha_plus
 }
 
-file = { synthesis_escapes* ~ EOI }
+file = { EOI | synthesis_escapes+ ~ EOI }
